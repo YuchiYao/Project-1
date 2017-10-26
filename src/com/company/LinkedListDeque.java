@@ -70,11 +70,24 @@ public class LinkedListDeque <typename_list> {
     }
 
     public ListNode gethelper(ListNode a,int i,int index){
-
-        if (i>index) return a;
+        if (index>size) return null;
+        else if (i>index) return a;
+        else{
         a = gethelper(a.next,i+1,index);
         return a;
+        }
     }
+
+    /*  Better recurrance method:
+    *public typename_list getReHelper(int index, int size){
+    * if (index >= size) return null;
+    * else if (index == 0) return this.next.item;
+    * else return this.next.getReHelper(index-1, size);
+    *}
+    *public itemType getRecursive(int index){
+    *   return sentinel.getReHelper(index,size);
+    *}
+    * */
 
     public void printDeque(){
         ListNode temp = first_sentinel.next;

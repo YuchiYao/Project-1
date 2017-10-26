@@ -12,11 +12,11 @@ public class Main {
         // Test case for base function
 
        */
-        /* 
+
         LinkedListDeque <String>lista= new <String>LinkedListDeque("yao");
         lista.addLast("is");
         lista.addLast("cool");
         System.out.print(lista.get(1)+" "+lista.getRecursive(1));
-        */
+
     }
 }
