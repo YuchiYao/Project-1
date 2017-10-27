@@ -25,7 +25,7 @@ public class ArrayDeque<Item> {
     }
     public ArrayDeque(Item a){
         Items[size] = a;
-        size+=1;
+        size=1;
     }
     public boolean isEmpty(){
         return size==0? true:false;
@@ -66,16 +66,18 @@ public class ArrayDeque<Item> {
             }
 
         }else if (Items.length>=16 && size<Items.length*0.25){  // This part doesn't work
-            int taget_length = size *2;
+            int taget_length;
+            if (size<4)taget_length=8;
+            else taget_length = size *2;
             Item[] b =(Item[]) new Object[taget_length];
             if(nextFirst>nextLast){
                 System.arraycopy(Items,0,b,0,nextLast);//Copy the last to the right
-                System.arraycopy(Items,nextFirst,b,b.length-(size-nextLast),size-nextLast);
-                nextFirst= b.length-(size-nextLast);
+                System.arraycopy(Items,nextFirst,b,b.length-(size-nextLast+1),size-nextLast+1);
+                nextFirst= b.length-(size-nextLast+1);
             }
             else{
-                System.arraycopy(Items,nextFirst,b,3,size);
-                nextLast= 3+size;
+                System.arraycopy(Items,nextFirst,b,3,size+1);
+                nextLast= 4+size; // Beign at 4
                 nextFirst =3;
             }
 
