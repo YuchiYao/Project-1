@@ -34,15 +34,17 @@ public class ArrayDeque<Item> {
         return size;
     }
     public void addFirst(Item a){  // works and resize
-        size+=1;
+
         Items[nextFirst]=a;
+        size+=1;
         resize();
         nextFirst=minusone(nextFirst);
 
     }
     public void addLast(Item a){  // works and resize
-        size+=1;
+
         Items[nextLast]=a;
+        size+=1;
         resize();
         nextLast=addone(nextLast);
 
@@ -60,13 +62,24 @@ public class ArrayDeque<Item> {
                 System.arraycopy(Items,nextFirst,a,a.length-(size-nextLast),size-nextLast);
                 //Copy the first to the end to the left
                 nextFirst= a.length-(size-nextLast);
+                Items = a;
             }
 
         }else if (Items.length>=16 && size<Items.length*0.25){  // This part doesn't work
             int taget_length = size *2;
             Item[] b =(Item[]) new Object[taget_length];
-            System.arraycopy(Items, 0, b, 0, size);
-            //Items =b;
+            if(nextFirst>nextLast){
+                System.arraycopy(Items,0,b,0,nextLast);//Copy the last to the right
+                System.arraycopy(Items,nextFirst,b,b.length-(size-nextLast),size-nextLast);
+                nextFirst= b.length-(size-nextLast);
+            }
+            else{
+                System.arraycopy(Items,nextFirst,b,3,size);
+                nextLast= 3+size;
+                nextFirst =3;
+            }
+
+            Items =b;
         }
     }
     public void printDeque(){ // This part works fine
@@ -78,26 +91,35 @@ public class ArrayDeque<Item> {
         System.out.println(" ");
     }
     public Item get(int index){
-        int target_index = nextFirst;
-        for (int i=0;i<index;i++){
-            target_index = addone(target_index);
+        if(index>size){
+            System.out.println("The Index is out of range");
+            return Items[index-size];
+        }else {
+            int target_index = nextFirst;
+            for (int i = 0; i < index; i++) {
+                target_index = addone(target_index);
+            }
+
+            return Items[target_index];
         }
-        return Items[target_index];
+
     }
     public Item removeFirst(){
         Item output=Items[addone(nextFirst)];
         Items[addone(nextFirst)]=null;
         size-=1;
-        resize();
         nextFirst = addone(nextFirst);
+        resize();
+
         return output;
     }
     public Item removeLast(){
         Item output=Items[minusone(nextLast)];
         Items[minusone(nextLast)]=null;
         size-=1;
-        resize();
         nextLast = minusone(nextLast);
+        resize();
+
         return output;
     }
 }

@@ -25,7 +25,7 @@ public class Main {
         }
         a.printDeque();
         for(int i=0;i<90;i++) {
-            a.removeLast();
+           a.removeLast();
         }
         a.printDeque();
 
